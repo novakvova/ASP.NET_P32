@@ -1,6 +1,13 @@
+using _1.WorkingMVC.Data;
+using _1.WorkingMVC.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<MyAppDbContext>(opt => 
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -21,5 +28,29 @@ app.MapControllerRoute(
     pattern: "{controller=Main}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+using (var scoped = app.Services.CreateScope())
+{
+    var myAppDbContext = scoped.ServiceProvider.GetRequiredService<MyAppDbContext>();
+    myAppDbContext.Database.Migrate(); //якщо ми не робили міграціії
+
+    if(!myAppDbContext.Categories.Any())
+    {
+        var categories = new List<CategoryEntity>
+        {
+            new CategoryEntity 
+            { 
+                Name = "Напої безалкогольні", 
+                Image = "https://src.zakaz.atbmarket.com/cache/category/%D0%91%D0%B5%D0%B7%D0%B0%D0%BB%D0%BA%D0%BE%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%96%20%D0%BD%D0%B0%D0%BF%D0%BE%D1%96%CC%88.webp"
+            },
+            new CategoryEntity
+            {
+                Name = "Овочі та фрукти",
+                Image = "https://src.zakaz.atbmarket.com/cache/category/%D0%9E%D0%B2%D0%BE%D1%87%D1%96%20%D1%82%D0%B0%20%D1%84%D1%80%D1%83%D0%BA%D1%82%D0%B8.webp"
+            }
+        };
+        myAppDbContext.Categories.AddRange(categories);
+        myAppDbContext.SaveChanges();
+    }
+}
 
 app.Run();

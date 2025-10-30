@@ -1,6 +1,31 @@
-﻿@{
+﻿@model List<_1.WorkingMVC.Data.Entities.CategoryEntity>
+@{
     //Layout = "_MainLayout"; //не використовувати обгортку Layout
 }
 
-<h1>Це магазин АТБ</h1>
-<h2>Класна сьогодні погода :) --===</h2>
+<div class="container">
+    <h1 class="text-center">Категорії</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Фото</th>
+                <th scope="col">Назва</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var category in Model)
+            {
+                <tr>
+                    <th scope="row">@category.Id</th>
+                    <td>
+                        <img src="@category.Image" width="100"/>
+                    </td>
+                    <td>@category.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

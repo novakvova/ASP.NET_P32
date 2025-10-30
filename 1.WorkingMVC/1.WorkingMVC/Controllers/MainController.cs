@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using _1.WorkingMVC.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace _1.WorkingMVC.Controllers;
 
-public class MainController : Controller
+//.NEt 8.0 та 9.0
+public class MainController(MyAppDbContext myAppDbContext) : Controller
 {
     public IActionResult Index()
     {
-        return View();
+        var list = myAppDbContext.Categories.ToList();
+        return View(list);
     }
 }
