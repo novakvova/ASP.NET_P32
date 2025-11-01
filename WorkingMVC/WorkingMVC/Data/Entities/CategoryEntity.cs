@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _1.WorkingMVC.Data.Entities;
+namespace WorkingMVC.Data.Entities;
 
 [Table("tblCategories")]
 public class CategoryEntity

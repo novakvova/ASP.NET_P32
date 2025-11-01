@@ -1,5 +1,5 @@
-using _1.WorkingMVC.Data;
-using _1.WorkingMVC.Data.Entities;
+using WorkingMVC.Data;
+using WorkingMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

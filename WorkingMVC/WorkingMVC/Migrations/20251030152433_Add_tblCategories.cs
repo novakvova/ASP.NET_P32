@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace _1.WorkingMVC.Migrations
+namespace WorkingMVC.Migrations
 {
     /// <inheritdoc />
     public partial class Add_tblCategories : Migration

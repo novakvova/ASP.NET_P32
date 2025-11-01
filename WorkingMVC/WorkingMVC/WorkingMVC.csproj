@@ -4,7 +4,7 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>_1.WorkingMVC</RootNamespace>
+		<RootNamespace>WorkingMVC</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

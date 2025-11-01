@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using _1.WorkingMVC.Data;
+using WorkingMVC.Data;
 
 #nullable disable
 
-namespace _1.WorkingMVC.Migrations
+namespace WorkingMVC.Migrations
 {
     [DbContext(typeof(MyAppDbContext))]
     [Migration("20251030152433_Add_tblCategories")]
@@ -24,7 +24,7 @@ namespace _1.WorkingMVC.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("_1.WorkingMVC.Data.Entities.CategoryEntity", b =>
+            modelBuilder.Entity("WorkingMVC.Data.Entities.CategoryEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

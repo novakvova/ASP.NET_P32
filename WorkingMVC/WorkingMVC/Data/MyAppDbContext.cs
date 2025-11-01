@@ -1,7 +1,7 @@
-﻿using _1.WorkingMVC.Data.Entities;
+﻿using WorkingMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace _1.WorkingMVC.Data;
+namespace WorkingMVC.Data;
 
 public class MyAppDbContext : DbContext
 {
