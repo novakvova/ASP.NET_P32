@@ -4,13 +4,18 @@
     <h1 class="text-center">Додати категорію</h1>
     <form asp-action="Create" enctype="multipart/form-data"
           class="col-md-6 offset-md-3">
+        
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="mb-3">
             <label asp-for="Name" class="form-label"></label>
             <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="Image" class="form-label"></label>
             <input asp-for="Image" class="form-control">
+            <span asp-validation-for="Image" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Додати</button>
     </form>

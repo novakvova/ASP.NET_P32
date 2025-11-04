@@ -2,23 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkingMVC.Data.Entities;
 using WorkingMVC.Models.Category;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace WorkingMVC.Controllers;
 
 //.NEt 8.0 та 9.0
 public class MainController(MyAppDbContext myAppDbContext,
-    IConfiguration configuration) : Controller
+    IConfiguration configuration,
+    IMapper mapper) : Controller
 {
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var list = myAppDbContext.Categories
-            .Select(x => new CategoryItemModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Image = x.Image
-            })
-            .ToList();
+        var list = await myAppDbContext.Categories
+            .ProjectTo<CategoryItemModel>(mapper.ConfigurationProvider)
+            .ToListAsync();
+            ///.Select(x => new CategoryItemModel
+            ///{
+            ///    Id = x.Id,
+            ///    Name = x.Name,
+            ///    Image = x.Image
+            ///})
+            ///.ToList();
         return View(list);
     }
 
@@ -32,7 +38,24 @@ public class MainController(MyAppDbContext myAppDbContext,
     [HttpPost] //Збереження даних
     public IActionResult Create(CategoryCreateModel model)
     {
-        var entity = new CategoryEntity
+        if(!ModelState.IsValid)
+        {
+            return View(model); // якщо модель не валідна викидаємо дані назад,
+            //Щоб користувач знав, що він невірно вніс
+        }
+
+        var name = model.Name.Trim();
+        var entity = myAppDbContext.Categories
+            .SingleOrDefault(c => c.Name == name);
+
+        if (entity != null)
+        {
+            ModelState.AddModelError("", "У нас проблеми Хюстон" +
+                $"Така категорія уже є {name}");
+            return View(model);
+        }
+
+        entity = new CategoryEntity
         {
             Name = model.Name
         };
