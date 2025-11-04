@@ -2,6 +2,8 @@ using WorkingMVC.Data;
 using WorkingMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using WorkingMVC.Interfaces;
+using WorkingMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<MyAppDbContext>(opt =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 

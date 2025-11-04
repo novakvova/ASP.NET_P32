@@ -5,13 +5,15 @@ using WorkingMVC.Models.Category;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using WorkingMVC.Interfaces;
 
 namespace WorkingMVC.Controllers;
 
 //.NEt 8.0 та 9.0
 public class MainController(MyAppDbContext myAppDbContext,
     IConfiguration configuration,
-    IMapper mapper) : Controller
+    IMapper mapper,
+    IImageService imageService) : Controller
 {
     public async Task<IActionResult> Index()
     {
@@ -36,7 +38,7 @@ public class MainController(MyAppDbContext myAppDbContext,
     }
 
     [HttpPost] //Збереження даних
-    public IActionResult Create(CategoryCreateModel model)
+    public async Task<IActionResult> Create(CategoryCreateModel model)
     {
         if(!ModelState.IsValid)
         {
@@ -62,13 +64,14 @@ public class MainController(MyAppDbContext myAppDbContext,
         var dirImageName = configuration.GetValue<string>("DirImageName");
         if (model.Image != null)
         {
-            //Guid - генерує випадкову величну, яка не можу повторитися
-            var fileName = Guid.NewGuid().ToString()+".jpg";
-            var pathSave = Path.Combine(Directory.GetCurrentDirectory(), 
-                dirImageName ?? "images", fileName);
-            using var stream = new FileStream(pathSave, FileMode.Create);
-            model.Image.CopyTo(stream); //Зберігаємо фото, яке на приходить у папку.
-            entity.Image = fileName;
+            entity.Image = await imageService.UploadImageAsync(model.Image);
+            // //Guid - генерує випадкову величну, яка не можу повторитися
+            // var fileName = Guid.NewGuid().ToString()+".jpg";
+            // var pathSave = Path.Combine(Directory.GetCurrentDirectory(), 
+            //     dirImageName ?? "images", fileName);
+            // using var stream = new FileStream(pathSave, FileMode.Create);
+            // model.Image.CopyTo(stream); //Зберігаємо фото, яке на приходить у папку.
+            // entity.Image = fileName;
         }
         myAppDbContext.Categories.Add(entity);
         myAppDbContext.SaveChanges();
