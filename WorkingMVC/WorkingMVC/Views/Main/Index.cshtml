@@ -5,6 +5,7 @@
 
 <div class="container">
     <h1 class="text-center">Категорії</h1>
+    <a asp-action="Create" class="btn btn-success">Додати категорію</a>
     <table class="table">
         <thead>
             <tr>
@@ -19,7 +20,7 @@
                 <tr>
                     <th scope="row">@category.Id</th>
                     <td>
-                        <img src="@category.Image" width="100"/>
+                        <img src="/images/@category.Image" width="100"/>
                     </td>
                     <td>@category.Name</td>
                 </tr>

@@ -1,6 +1,7 @@
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,19 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Main}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+var dirImageName = builder.Configuration.GetValue<string>("DirImageName") ?? "test";
+
+// Console.WriteLine("Image dir {0}", dirImageName);
+var path = Path.Combine(Directory.GetCurrentDirectory(), dirImageName);
+Directory.CreateDirectory(dirImageName);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(path),
+    RequestPath = $"/{dirImageName}"
+});
+
 
 using (var scoped = app.Services.CreateScope())
 {
