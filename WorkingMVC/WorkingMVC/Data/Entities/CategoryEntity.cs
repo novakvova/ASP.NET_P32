@@ -11,4 +11,9 @@ public class CategoryEntity
     public string Name { get; set; } = string.Empty;
     [StringLength(255)]
     public string Image { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Дата створення категорії
+    /// </summary>
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 }

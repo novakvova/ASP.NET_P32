@@ -11,7 +11,14 @@ public class MainController(MyAppDbContext myAppDbContext,
 {
     public IActionResult Index()
     {
-        var list = myAppDbContext.Categories.ToList();
+        var list = myAppDbContext.Categories
+            .Select(x => new CategoryItemModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Image = x.Image
+            })
+            .ToList();
         return View(list);
     }
 
