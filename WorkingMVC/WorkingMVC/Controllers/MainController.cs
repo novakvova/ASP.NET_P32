@@ -44,9 +44,9 @@ public class MainController(MyAppDbContext myAppDbContext,
             //Щоб користувач знав, що він невірно вніс
         }
 
-        var name = model.Name.Trim();
+        var name = model.Name.Trim().ToLower();
         var entity = myAppDbContext.Categories
-            .SingleOrDefault(c => c.Name == name);
+            .SingleOrDefault(c => c.Name.ToLower() == name);
 
         if (entity != null)
         {
