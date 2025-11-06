@@ -1,6 +1,8 @@
-﻿namespace WorkingMVC.Interfaces;
+﻿using WorkingMVC.Data.Entities;
 
-public interface ICategoryRepository
+namespace WorkingMVC.Interfaces;
+
+public interface ICategoryRepository : IGenericRepository<CategoryEntity>
 {
      
 }

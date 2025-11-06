@@ -11,12 +11,15 @@ namespace WorkingMVC.Controllers;
 
 //.NEt 8.0 та 9.0
 public class MainController(MyAppDbContext myAppDbContext,
+    ICategoryRepository categoryRepository,
     IConfiguration configuration,
     IMapper mapper,
     IImageService imageService) : Controller
 {
     public async Task<IActionResult> Index()
     {
+        //var listTest = await categoryRepository.GetAllAsync();
+        
         var list = await myAppDbContext.Categories
             .ProjectTo<CategoryItemModel>(mapper.ConfigurationProvider)
             .ToListAsync();

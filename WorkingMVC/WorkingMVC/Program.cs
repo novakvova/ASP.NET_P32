@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using WorkingMVC.Interfaces;
 using WorkingMVC.Services;
+using WorkingMVC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IImageService, ImageService>();
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 
