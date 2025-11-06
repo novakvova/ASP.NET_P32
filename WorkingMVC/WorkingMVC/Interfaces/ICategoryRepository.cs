@@ -2,7 +2,7 @@
 
 namespace WorkingMVC.Interfaces;
 
-public interface ICategoryRepository : IGenericRepository<CategoryEntity>
+public interface ICategoryRepository : IGenericRepository<CategoryEntity, int>
 {
      
 }

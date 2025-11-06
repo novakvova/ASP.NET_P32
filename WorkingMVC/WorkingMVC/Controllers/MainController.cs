@@ -18,11 +18,12 @@ public class MainController(MyAppDbContext myAppDbContext,
 {
     public async Task<IActionResult> Index()
     {
-        //var listTest = await categoryRepository.GetAllAsync();
+        var listTest = await categoryRepository.GetAllAsync();
+        var model = mapper.Map<List<CategoryItemModel>>(listTest);
         
-        var list = await myAppDbContext.Categories
-            .ProjectTo<CategoryItemModel>(mapper.ConfigurationProvider)
-            .ToListAsync();
+        //var list = await myAppDbContext.Categories
+        //    .ProjectTo<CategoryItemModel>(mapper.ConfigurationProvider)
+        //    .ToListAsync()
             ///.Select(x => new CategoryItemModel
             ///{
             ///    Id = x.Id,
@@ -30,7 +31,7 @@ public class MainController(MyAppDbContext myAppDbContext,
             ///    Image = x.Image
             ///})
             ///.ToList();
-        return View(list);
+        return View(model);
     }
 
     //Для того, щоб побачити сторінку створення категорії

@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WorkingMVC.Data.Entities;
 using WorkingMVC.Interfaces;
 
 namespace WorkingMVC.Repositories;
 
-public abstract class BaseRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey>
+    where TEntity : class, IEntity<TKey>
 {
     protected readonly DbContext _dbContext;
     protected readonly DbSet<TEntity> _dbSet;
@@ -14,14 +16,14 @@ public abstract class BaseRepository<TEntity> : IGenericRepository<TEntity> wher
         _dbSet = dbContext.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity> GetByIdAsync(int id)
+    public virtual async Task<TEntity?> GetByIdAsync(TKey id)
     {
         return await _dbSet.FindAsync(id);
     }
 
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(bool isDeleted = false)
     {
-        return await _dbSet.ToListAsync();
+        return await _dbSet.Where(x=>x.IsDeleted==isDeleted).ToListAsync();
     }
 
     public virtual async Task AddAsync(TEntity entity)

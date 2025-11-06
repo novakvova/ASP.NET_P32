@@ -5,7 +5,7 @@ using WorkingMVC.Interfaces;
 
 namespace WorkingMVC.Repositories;
 
-public class CategoryRepository : BaseRepository<CategoryEntity>, 
+public class CategoryRepository : BaseRepository<CategoryEntity, int>, 
     ICategoryRepository
 {
     public CategoryRepository(MyAppDbContext dbContext)
