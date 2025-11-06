@@ -29,6 +29,7 @@ public abstract class BaseRepository<TEntity, TKey> : IGenericRepository<TEntity
     public virtual async Task AddAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
     }
 
     public virtual Task UpdateAsync(TEntity entity)

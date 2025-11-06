@@ -11,4 +11,11 @@ public class CategoryRepository : BaseRepository<CategoryEntity, int>,
     public CategoryRepository(MyAppDbContext dbContext)
         : base(dbContext)
     { }
+
+    public async Task<CategoryEntity?> FindByNameAsync(string name)
+    {
+        var nameLower = name.Trim().ToLower();
+        var entity = await _dbSet.SingleOrDefaultAsync(c => c.Name.ToLower() == nameLower);
+        return entity;
+    }
 }

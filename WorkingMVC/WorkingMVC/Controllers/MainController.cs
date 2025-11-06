@@ -1,36 +1,15 @@
-﻿using WorkingMVC.Data;
-using Microsoft.AspNetCore.Mvc;
-using WorkingMVC.Data.Entities;
-using WorkingMVC.Models.Category;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using WorkingMVC.Interfaces;
+using WorkingMVC.Models.Category;
 
 namespace WorkingMVC.Controllers;
 
 //.NEt 8.0 та 9.0
-public class MainController(MyAppDbContext myAppDbContext,
-    ICategoryRepository categoryRepository,
-    IConfiguration configuration,
-    IMapper mapper,
-    IImageService imageService) : Controller
+public class MainController(ICategoryService categoryService) : Controller
 {
     public async Task<IActionResult> Index()
     {
-        var listTest = await categoryRepository.GetAllAsync();
-        var model = mapper.Map<List<CategoryItemModel>>(listTest);
-        
-        //var list = await myAppDbContext.Categories
-        //    .ProjectTo<CategoryItemModel>(mapper.ConfigurationProvider)
-        //    .ToListAsync()
-            ///.Select(x => new CategoryItemModel
-            ///{
-            ///    Id = x.Id,
-            ///    Name = x.Name,
-            ///    Image = x.Image
-            ///})
-            ///.ToList();
+        var model = await categoryService.GetAllAsync();
         return View(model);
     }
 
@@ -50,35 +29,15 @@ public class MainController(MyAppDbContext myAppDbContext,
             //Щоб користувач знав, що він невірно вніс
         }
 
-        var name = model.Name.Trim().ToLower();
-        var entity = myAppDbContext.Categories
-            .SingleOrDefault(c => c.Name.ToLower() == name);
-
-        if (entity != null)
+        try
         {
-            ModelState.AddModelError("", "У нас проблеми Хюстон" +
-                $"Така категорія уже є {name}");
+            await categoryService.CreateAsync(model);
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("", ex.Message);
             return View(model);
         }
-
-        entity = new CategoryEntity
-        {
-            Name = model.Name
-        };
-        var dirImageName = configuration.GetValue<string>("DirImageName");
-        if (model.Image != null)
-        {
-            entity.Image = await imageService.UploadImageAsync(model.Image);
-            // //Guid - генерує випадкову величну, яка не можу повторитися
-            // var fileName = Guid.NewGuid().ToString()+".jpg";
-            // var pathSave = Path.Combine(Directory.GetCurrentDirectory(), 
-            //     dirImageName ?? "images", fileName);
-            // using var stream = new FileStream(pathSave, FileMode.Create);
-            // model.Image.CopyTo(stream); //Зберігаємо фото, яке на приходить у папку.
-            // entity.Image = fileName;
-        }
-        myAppDbContext.Categories.Add(entity);
-        myAppDbContext.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
 }
