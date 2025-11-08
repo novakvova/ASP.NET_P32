@@ -1,0 +1,49 @@
+﻿@model RegisterViewModel
+
+<div class="container">
+    <h1 class="text-center">Реєстрація</h1>
+    <form asp-action="Register" enctype="multipart/form-data"
+          class="col-md-6 offset-md-3">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Image" class="form-label"></label>
+            <input asp-for="Image" class="form-control">
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PasswordConfirm" class="form-label"></label>
+            <input asp-for="PasswordConfirm" class="form-control">
+            <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Реєстрація</button>
+    </form>
+</div>
+

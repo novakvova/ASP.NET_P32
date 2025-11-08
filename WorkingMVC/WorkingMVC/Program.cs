@@ -1,16 +1,29 @@
-using WorkingMVC.Data;
-using WorkingMVC.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using WorkingMVC.Data;
+using WorkingMVC.Data.Entities.Idenity;
 using WorkingMVC.Interfaces;
-using WorkingMVC.Services;
 using WorkingMVC.Repositories;
+using WorkingMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<MyAppDbContext>(opt => 
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
+{
+    options.Password.RequireDigit = false; //цифри
+    options.Password.RequireNonAlphanumeric = false; //не букви і не цифри - спец
+    options.Password.RequireLowercase = false; //маленькі
+    options.Password.RequireUppercase = false; //великі
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1; //кількість різних символів
+})
+    .AddEntityFrameworkStores<MyAppDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
 
@@ -57,6 +70,7 @@ app.UseStaticFiles(new StaticFileOptions
 using (var scoped = app.Services.CreateScope())
 {
     var myAppDbContext = scoped.ServiceProvider.GetRequiredService<MyAppDbContext>();
+    var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
     myAppDbContext.Database.Migrate(); //якщо ми не робили міграціії
 
     if(!myAppDbContext.Categories.Any())
@@ -76,6 +90,28 @@ using (var scoped = app.Services.CreateScope())
         //};
         //myAppDbContext.Categories.AddRange(categories);
         //myAppDbContext.SaveChanges();
+    }
+
+    if(!myAppDbContext.Roles.Any()) //Якщо в БД немає ролей
+    {
+        string[] roles = { "Admin", "User" };
+        foreach(var roleName in roles)
+        {
+            var role = new RoleEntity(roleName);
+            var result = await roleManager.CreateAsync(role);
+            if (result.Succeeded)
+            {
+                Console.WriteLine($"-----Створили роль {roleName}-----");
+            }
+            else
+            {
+                foreach(var error in  result.Errors)
+                {
+                    Console.WriteLine("+++Проблема "+error.Description);
+                }
+                Console.WriteLine($"++++Проблеми створення ролі {roleName}++++");
+            }
+        }
     }
 }
 

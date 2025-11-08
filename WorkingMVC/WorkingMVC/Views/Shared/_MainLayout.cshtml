@@ -4,8 +4,12 @@
     <meta charset="utf-8" />
     <title>АТБ</title>
     <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/site.css" rel="stylesheet" />
 </head>
 <body>
+
+    @await Html.PartialAsync("_Header")
+
     @RenderBody()
 </body>
 </html>
