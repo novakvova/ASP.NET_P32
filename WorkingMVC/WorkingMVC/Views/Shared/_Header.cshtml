@@ -19,13 +19,8 @@
                 @if(User.Identity.IsAuthenticated)
                 {
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               asp-action="Register"
-                               asp-controller="Account">
-                                @User.Identity.Name
-                            </a>
-                        </li>
+
+                        @await Component.InvokeAsync("UserLink")
 
                         <li class="nav-item">
                             <form asp-action="Logout" 
