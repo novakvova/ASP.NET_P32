@@ -9,9 +9,35 @@ namespace WorkingMVC.Controllers;
 
 public class AccountController(
     UserManager<UserEntity> userManager,
+    SignInManager<UserEntity> signInManager,
     IImageService imageService,
     IMapper mapper) : Controller
 {
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginViewModel model)
+    {
+        if(!ModelState.IsValid)
+            return View(model);
+        var user = await userManager.FindByEmailAsync(model.Email);
+        if(user!=null)
+        {
+            var res = await signInManager
+                .PasswordSignInAsync(user, model.Password, false, false);
+            if(res.Succeeded)
+            {
+                await signInManager.SignInAsync(user, isPersistent: false);
+                return Redirect("/");
+            }
+        }
+        ModelState.AddModelError("", "Дані вазано не вірно!");
+        return View(model);
+    }
+
     [HttpGet]
     public IActionResult Register()
     {
@@ -35,6 +61,8 @@ public class AccountController(
 
         if (result.Succeeded)
         {
+            //після реєстрації авторизовуємо
+            await signInManager.SignInAsync(user, isPersistent: false);
             //Перехід на головну
             return RedirectToAction("Index", "Main");
         }
@@ -47,4 +75,12 @@ public class AccountController(
             return View(model);
         }
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await signInManager.SignOutAsync();
+        return Redirect("/");
+    }
+
 }
