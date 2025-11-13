@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using WorkingMVC.Constants;
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entities.Idenity;
 using WorkingMVC.Interfaces;
@@ -99,8 +100,7 @@ using (var scoped = app.Services.CreateScope())
 
     if(!myAppDbContext.Roles.Any()) //‗ךשמ ג ÁÄ םולא÷ נמכוי
     {
-        string[] roles = { "Admin", "User" };
-        foreach(var roleName in roles)
+        foreach(var roleName in Roles.AllRoles)
         {
             var role = new RoleEntity(roleName);
             var result = await roleManager.CreateAsync(role);
