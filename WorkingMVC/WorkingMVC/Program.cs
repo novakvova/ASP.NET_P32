@@ -30,6 +30,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IImageService, ImageService>();
+//builder.Services.AddTransient<IImageService, ImageService>();
+//builder.Services.AddSingleton<IImageService, ImageService>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
