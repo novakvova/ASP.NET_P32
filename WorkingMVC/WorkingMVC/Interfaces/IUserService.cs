@@ -4,5 +4,5 @@ namespace WorkingMVC.Interfaces;
 
 public interface IUserService
 {
-    Task<List<UserItemModel>> GetUsers();
+    Task<List<UserItemModel>> GetUsersAsync();
 }

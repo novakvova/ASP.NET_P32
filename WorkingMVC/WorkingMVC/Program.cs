@@ -34,8 +34,9 @@ builder.Services.AddScoped<IImageService, ImageService>();
 //builder.Services.AddSingleton<IImageService, ImageService>();
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();

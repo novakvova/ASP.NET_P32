@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WorkingMVC.Interfaces;
 
 namespace WorkingMVC.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController(IUserService userService) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var result = await userService.GetUsersAsync();
+            return View(result);
         }
     }
 }
