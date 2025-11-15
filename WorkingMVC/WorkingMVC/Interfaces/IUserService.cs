@@ -1,4 +1,4 @@
-﻿using WorkingMVC.Models.Users;
+﻿using WorkingMVC.Areas.Admin.Models.Users;
 
 namespace WorkingMVC.Interfaces;
 

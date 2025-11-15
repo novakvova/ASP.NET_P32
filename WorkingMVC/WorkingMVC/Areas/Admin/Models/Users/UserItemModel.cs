@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WorkingMVC.Models.Users;
+namespace WorkingMVC.Areas.Admin.Models.Users;
 
 public class UserItemModel
 {
