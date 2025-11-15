@@ -1,4 +1,5 @@
-﻿<header data-bs-theme="dark">
+﻿@using WorkingMVC.Constants
+<header data-bs-theme="dark">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
             <a class="navbar-brand" 
@@ -11,8 +12,23 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item"> <a class="nav-link active" aria-current="page" href="#">Home</a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Link</a> </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" aria-current="page" href="/">
+                            Home
+                        </a> 
+                    </li>
+                    @if(User.IsInRole($"{Roles.Admin}"))
+                    {
+                        <li class="nav-item"> 
+                            <a class="nav-link" 
+                               asp-controller="Dashboards"
+                               asp-action="Index"
+                               asp-area="Admin">
+                               Адмін панель
+                           </a> 
+                        </li>
+                    }
+                 
                     <li class="nav-item"> <a class="nav-link disabled" aria-disabled="true">Disabled</a> </li>
                 </ul>
 
