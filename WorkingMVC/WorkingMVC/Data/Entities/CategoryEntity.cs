@@ -10,4 +10,6 @@ public class CategoryEntity : BaseEntity<int>
     public string Name { get; set; } = string.Empty;
     [StringLength(255)]
     public string Image { get; set; } = string.Empty;
+
+    public ICollection<ProductEntity>? Products { get; set; }
 }
