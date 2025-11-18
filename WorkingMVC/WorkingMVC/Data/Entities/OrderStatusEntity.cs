@@ -8,4 +8,5 @@ public class OrderStatusEntity : BaseEntity<int>
 {
     [StringLength(250)]
     public string Name { get; set; } = string.Empty;
+    public ICollection<OrderEntity> Orders { get; set; } = null!;
 }

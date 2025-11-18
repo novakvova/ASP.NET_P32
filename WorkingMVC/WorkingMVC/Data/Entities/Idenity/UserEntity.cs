@@ -9,4 +9,5 @@ public class UserEntity : IdentityUser<int>
     public string? Image { get; set; } = null;
     public ICollection<UserRoleEntity> UserRoles { get; set; } = null!;
     public ICollection<CartEntity> Carts { get; set; } = null!;
+    public ICollection<OrderEntity> Orders { get; set; } = null!;
 }

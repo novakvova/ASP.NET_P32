@@ -15,4 +15,5 @@ public class ProductEntity : BaseEntity<int>
     public CategoryEntity Category { get; set; } = null!;
     public ICollection<ProductImageEntity>? ProductImages { get; set; }
     public ICollection<CartEntity> Carts { get; set; } = null!;
+    public ICollection<OrderItemEntity> OrderItems { get; set; } = null!;
 }
