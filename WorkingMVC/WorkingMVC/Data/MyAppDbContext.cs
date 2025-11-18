@@ -16,6 +16,9 @@ public class MyAppDbContext : IdentityDbContext<UserEntity, RoleEntity, int,
 
     //Це таблиця в БД
     public DbSet<CategoryEntity> Categories { get; set; }
+    public DbSet<ProductEntity> Products { get; set; }
+    public DbSet<ProductImageEntity> ProductImages { get; set; }
+    public DbSet<CartEntity> Carts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -31,5 +34,8 @@ public class MyAppDbContext : IdentityDbContext<UserEntity, RoleEntity, int,
             .HasOne(ur => ur.Role)
             .WithMany(u => u.UserRoles)
             .HasForeignKey(ur => ur.RoleId);
+
+        builder.Entity<CartEntity>()
+            .HasKey(pi => new { pi.ProductId, pi.UserId });
     }
 }

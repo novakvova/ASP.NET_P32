@@ -13,5 +13,6 @@ public class ProductEntity : BaseEntity<int>
     [ForeignKey(nameof(Category))]
     public int CategoryId { get; set; }
     public CategoryEntity Category { get; set; } = null!;
-    public ICollection<ProductImageEntity>? ProductImages { get; set; } 
+    public ICollection<ProductImageEntity>? ProductImages { get; set; }
+    public ICollection<CartEntity> Carts { get; set; } = null!;
 }
