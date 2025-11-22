@@ -16,4 +16,13 @@ public class CountriesController(ICountryService countryService)
         // Implementation to retrieve and return countries would go here.
         return Ok(list); //код 200
     }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateCountry([FromForm] CountryCreateModel model)
+    {
+        var item = await countryService.CreateAsync(model);
+
+        return CreatedAtAction(null, item);
+        //return Created(item); //код 201
+    }
 }
