@@ -9,5 +9,8 @@ public class CountryMapper : Profile
     public CountryMapper()
     {
         CreateMap<CountryEntity, CountryItemModel>();
+
+        CreateMap<CountryCreateModel, CountryEntity>()
+            .ForMember(x=>x.Image, opt=>opt.Ignore());
     }
 }

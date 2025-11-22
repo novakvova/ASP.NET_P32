@@ -18,6 +18,7 @@ builder.Services.AddCors();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 
