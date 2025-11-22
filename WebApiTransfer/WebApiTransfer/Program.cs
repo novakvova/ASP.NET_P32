@@ -1,3 +1,5 @@
+using Core.Interfaces;
+using Core.Services;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<ICountryService, CountryService>();
 
 var app = builder.Build();
 
