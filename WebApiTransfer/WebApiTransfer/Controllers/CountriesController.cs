@@ -25,4 +25,18 @@ public class CountriesController(ICountryService countryService)
         return CreatedAtAction(null, item);
         //return Created(item); //код 201
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync(int id)
+    {
+        await countryService.DeleteAsync(id);
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateAsync([FromForm] CountryUpdateModel model)
+    {
+        var res = await countryService.UpdateAsync(model);
+        return Ok(res);
+    }
 }

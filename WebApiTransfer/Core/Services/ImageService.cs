@@ -37,4 +37,16 @@ public class ImageService(IConfiguration configuration) : IImageService
             return String.Empty;
         }
     }
+
+    public void DeleteImage(string fileName)
+    {
+        if (string.IsNullOrEmpty(fileName)) return;
+
+        var dirImageName = configuration["DirImageName"] ?? "images";
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), dirImageName, fileName);
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+    }
 }
