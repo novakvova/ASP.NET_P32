@@ -21,8 +21,11 @@ public class CityService(AppDbTransferContext appDbContext,
         }
         await appDbContext.Cities.AddAsync(entity);
         await appDbContext.SaveChangesAsync();
-        var item = mapper.Map<CityItemModel>(entity);
-        return item;
+
+        var city = await appDbContext.Cities
+            .ProjectTo<CityItemModel>(mapper.ConfigurationProvider)
+            .FirstAsync(c => c.Id == entity.Id);
+        return city;
     }
 
     public async Task<List<CityItemModel>> GetListAsync()
