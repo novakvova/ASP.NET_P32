@@ -1,4 +1,4 @@
-﻿using Core.Models.Location;
+﻿using Core.Models.Location.Country;
 
 namespace Core.Interfaces;
 

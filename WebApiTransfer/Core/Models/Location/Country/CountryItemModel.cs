@@ -1,4 +1,4 @@
-﻿namespace Core.Models.Location;
+﻿namespace Core.Models.Location.Country;
 
 public class CountryItemModel
 {
