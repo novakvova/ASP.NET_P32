@@ -1,15 +1,18 @@
 ﻿using Core.Interfaces;
 using Core.Models.Location.Country;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApiTransfer.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class CountriesController(ICountryService countryService) 
     : ControllerBase
 {
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetCountries()
     {
         var list = await countryService.GetListAsync();
