@@ -51,6 +51,8 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+//ўоб отримати доступ до HttpContext в серв≥сах
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 
@@ -96,6 +98,8 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
