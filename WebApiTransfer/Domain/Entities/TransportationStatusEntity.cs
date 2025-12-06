@@ -8,4 +8,5 @@ public class TransportationStatusEntity : BaseEntity<int>
 {
     [StringLength(255)]
     public string Name { get; set; } = String.Empty;
+    public ICollection<TransportationEntity>? Transportations { get; set; }
 }
