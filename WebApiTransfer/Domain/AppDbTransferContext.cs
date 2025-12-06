@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Idenity;
+﻿using Domain.Entities;
+using Domain.Entities.Idenity;
 using Domain.Entities.Location;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -17,6 +18,7 @@ public class AppDbTransferContext : IdentityDbContext<UserEntity, RoleEntity, in
 
     public DbSet<CountryEntity> Countries { get; set; }
     public DbSet<CityEntity> Cities { get; set; }
+    public DbSet<TransportationStatusEntity> TransportationStatuses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
