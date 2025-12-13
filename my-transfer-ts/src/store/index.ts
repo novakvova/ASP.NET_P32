@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 // import {countryApi} from "../services/CountryService/CountryService.ts";
 // import {cityApi} from "../services/CityService/CityService.ts";
 // import {googleApi} from "../services/GoogleAuthServise/GoogleAuthServise.ts";
-import {authApi} from "../services/authApi.ts";
+// import {authApi} from "../services/authApi.ts";
 import {type TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 // import {authorizedUserApi} from "../services/AuthorizedUser/AuthorizedUserService.ts";
 import authReducer from "../services/authSlice.ts";
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     // [countryApi.reducerPath]: countryApi.reducer,
     // [cityApi.reducerPath]: cityApi.reducer,
     // [googleApi.reducerPath]: googleApi.reducer,
-    [authApi.reducerPath]: authApi.reducer,
+    // [authApi.reducerPath]: authApi.reducer,
     auth: authReducer
     // [authorizedUserApi.reducerPath]: authorizedUserApi.reducer,
 });
@@ -25,7 +25,7 @@ export const setupStore = () => {
                 // countryApi.middleware,
                 // cityApi.middleware,
                 // googleApi.middleware,
-                authApi.middleware,
+                // authApi.middleware,
                 // authorizedUserApi.middleware
             ),
 
