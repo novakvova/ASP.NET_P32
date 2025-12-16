@@ -8,6 +8,7 @@ import type {LoginSuccess} from "../../Interfaces/User/LoginSuccess.ts";
 // import type {UserTokenInfo} from "../../Interfaces/User/UserTokenInfo.ts";
 import {loginSuccess} from "../../services/authSlice.ts";
 import {useAppDispatch} from "../../store";
+// import {useDispatch} from "react-redux";
 
 const LogIn: React.FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -15,6 +16,7 @@ const LogIn: React.FC = () => {
 
     //Давати повідмлення у Redux, що потірбно викнати певну дію
     const appDispatch = useAppDispatch();
+    // const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -35,6 +37,7 @@ const LogIn: React.FC = () => {
             const { token } = res.data;
             //Повідомляємо, що користувач пройшов процедуру входу успішно
             appDispatch(loginSuccess(token));
+            // dispatch(loginSuccess(token));
             //const decode = jwtDecode<UserTokenInfo>(token);
             //console.log("Decode token", decode);
             // console.log("Decode token", decode.roles);

@@ -2,10 +2,12 @@ import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../store";
 import APP_ENV from "../env";
 import {logout} from "../services/authSlice.ts";
+// import {useSelector} from "react-redux";
 
 export default function Header() {
     const user =
         useAppSelector(redux => redux.auth.user);
+    // const user = useSelector
     // console.log("User auth", user);
     const appDispatch = useAppDispatch();
     const navigate = useNavigate();
