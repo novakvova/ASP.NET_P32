@@ -19,6 +19,9 @@ import Images from "./admin/pages/UiElements/Images.tsx";
 import Videos from "./admin/pages/UiElements/Videos.tsx";
 import LineChart from "./admin/pages/Charts/LineChart.tsx";
 import BarChart from "./admin/pages/Charts/BarChart.tsx";
+import SignIn from "./admin/pages/AuthPages/SignIn.tsx";
+import SignUp from "./admin/pages/AuthPages/SignUp.tsx";
+import NotFound from "./admin/pages/OtherPage/NotFound.tsx";
 
 
 const MainLayout = () => {
@@ -73,6 +76,12 @@ export default function App() {
                     <Route path="line-chart" element={<LineChart />} />
                     <Route path="bar-chart" element={<BarChart />} />
                 </Route>
+                {/* Auth Layout */}
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+
+                {/* Fallback Route */}
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
 
