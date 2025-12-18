@@ -57,6 +57,13 @@ public class AccountController(UserManager<UserEntity> userManager,
     }
 
     [HttpPost]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
+    {
+        await userService.ResetPasswordAsync(model);
+        return Ok();
+    }
+
+    [HttpPost]
     public async Task<IActionResult> Register(RegisterModel model)
     {
         if (!ModelState.IsValid)

@@ -54,8 +54,11 @@ public class UserService(IAuthService authService,
         return profile!;
     }
 
-    public Task<bool> ResetPasswordAsync(ResetPasswordModel model)
+    public async Task ResetPasswordAsync(ResetPasswordModel model)
     {
-        throw new NotImplementedException();
+        var user = await userManager.FindByEmailAsync(model.Email);
+
+        if (user != null)
+            await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
     }
 }
