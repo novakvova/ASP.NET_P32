@@ -100,6 +100,8 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ISmtpService, SmtpService>();
+
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>

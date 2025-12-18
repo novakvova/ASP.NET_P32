@@ -1,5 +1,6 @@
 ﻿using Core.Interfaces;
 using Core.Models.Account;
+using Core.Services;
 using Domain.Entities.Idenity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,8 @@ namespace WebApiTransfer.Controllers;
 [ApiController]
 public class AccountController(UserManager<UserEntity> userManager,
     IUserService userService,
+    RoleManager<RoleEntity> roleManager,
+    IImageService imageService,
     IJwtTokenService jwtTokenService) : ControllerBase
 {
     
@@ -38,6 +41,56 @@ public class AccountController(UserManager<UserEntity> userManager,
         хоче відновити пароль (тобто домен клієнта react).
     */
 
+    [HttpPost]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
+    {
+        bool res = await userService.ForgotPasswordAsync(model);
+        if (res)
+            return Ok();
+        else
+            return BadRequest(new
+            {
+                Status = 400,
+                IsValid = false,
+                Errors = new { Email = "Користувача з такою поштою не існує" }
+            });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterModel model)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var entity = new UserEntity
+        {
+            Email = model.Email,
+            UserName = model.Email,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+        };
+        if (model.Image != null)
+        {
+            entity.Image = await imageService.UploadImageAsync(model.Image);
+        }
+
+        var result = await userManager.CreateAsync(entity, model.Password);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
+
+        if (!await roleManager.RoleExistsAsync("User"))
+        {
+            await roleManager.CreateAsync(new RoleEntity { Name = "User" });
+        }
+        await userManager.AddToRoleAsync(entity, "User");
+
+        var token = await jwtTokenService.CreateAsync(entity);
+
+        return Ok(new { token });
+    }
 
     [HttpGet]
     [Authorize]
