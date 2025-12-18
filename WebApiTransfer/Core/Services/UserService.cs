@@ -54,11 +54,21 @@ public class UserService(IAuthService authService,
         return profile!;
     }
 
-    public async Task ResetPasswordAsync(ResetPasswordModel model)
+    public async Task<bool> ResetPasswordAsync(ResetPasswordModel model)
     {
         var user = await userManager.FindByEmailAsync(model.Email);
 
         if (user != null)
-            await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+        {
+            var result = await userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+            if (!result.Succeeded)
+            {
+                return false;
+            }
+        }
+        else
+            return false;
+
+        return true;
     }
 }

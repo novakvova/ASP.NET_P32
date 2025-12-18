@@ -59,7 +59,16 @@ public class AccountController(UserManager<UserEntity> userManager,
     [HttpPost]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel model)
     {
-        await userService.ResetPasswordAsync(model);
+        var isTry =  await userService.ResetPasswordAsync(model);
+        if (!isTry)
+        {
+            return BadRequest(new
+            {
+                Status = 400,
+                IsValid = false,
+                Errors = new { Email = "Невірні дані для відновлення паролю" }
+            });
+        }
         return Ok();
     }
 
