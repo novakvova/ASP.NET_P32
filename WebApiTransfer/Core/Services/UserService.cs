@@ -3,18 +3,44 @@ using AutoMapper.QueryableExtensions;
 using Core.Interfaces;
 using Core.Models.Account;
 using Core.Models.Location.City;
+using Core.SMTP;
 using Domain;
+using Domain.Entities.Idenity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Services;
 
 public class UserService(IAuthService authService, 
     AppDbTransferContext transferContext,
+    IConfiguration configuration,
+    UserManager<UserEntity> userManager,
+    ISmtpService smtpService,
     IMapper mapper) : IUserService
 {
-    public Task<bool> ForgotPasswordAsync(ForgotPasswordModel model)
+    public async Task<bool> ForgotPasswordAsync(ForgotPasswordModel model)
     {
-        throw new NotImplementedException();
+        var user = await userManager.FindByEmailAsync(model.Email);
+
+        if (user == null)
+        {
+            return false;
+        }
+
+        string token = await userManager.GeneratePasswordResetTokenAsync(user);
+        var resetLink = $"{configuration["ClientUrl"]}/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(model.Email)}";
+
+        var emailModel = new EmailMessage
+        {
+            To = model.Email,
+            Subject = "Password Reset",
+            Body = $"<p>Click the link below to reset your password:</p><a href='{resetLink}'>Reset Password</a>"
+        };
+
+        var result = await smtpService.SendEmailAsync(emailModel);
+
+        return result;
     }
 
     public async Task<UserProfileModel> GetUserProfileAsync()

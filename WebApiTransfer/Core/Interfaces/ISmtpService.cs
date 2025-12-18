@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.SMTP;
 
 namespace Core.Interfaces;
 
-internal class ISmtpService
+public interface ISmtpService
 {
+    Task<bool> SendEmailAsync(EmailMessage message);
 }
