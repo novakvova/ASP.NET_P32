@@ -13,6 +13,7 @@ public class AccountController(UserManager<UserEntity> userManager,
     IUserService userService,
     IJwtTokenService jwtTokenService) : ControllerBase
 {
+    
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
@@ -24,6 +25,19 @@ public class AccountController(UserManager<UserEntity> userManager,
         var token = await jwtTokenService.CreateAsync(user);
         return Ok(new { token });
     }
+
+    /*Відновлення паролю
+     1.Спочатку користувач вказу пошту
+     2.На пошту приходить лист, де ми можемо перейти на відновлення
+     2.1. Дане посилання має бути на frontend частину, 
+        де користувач зможе ввести новий пароль.
+     2.2. Коли користувач вводить новий пароль, 
+        frontend частина має відправити запит на backend 
+        з новим паролем та токеном(токен - ключ для відновлення паролю).
+    3. Тобто при відновлені пролю миємо знати хто є клієнт, який
+        хоче відновити пароль (тобто домен клієнта react).
+    */
+
 
     [HttpGet]
     [Authorize]
