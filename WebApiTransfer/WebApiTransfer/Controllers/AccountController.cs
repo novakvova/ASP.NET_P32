@@ -5,6 +5,7 @@ using Domain.Entities.Idenity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace WebApiTransfer.Controllers;
 
@@ -114,5 +115,23 @@ public class AccountController(UserManager<UserEntity> userManager,
     {
         var model =  await userService.GetUserProfileAsync();
         return Ok(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Search([FromQuery] UserSearchModel model)
+    {
+        //Обчислення часу виконання
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+        var result = await userService.SearchAsync(model);
+        stopwatch.Stop();
+        // Get the elapsed time as a TimeSpan value.
+        TimeSpan ts = stopwatch.Elapsed;
+        // Format and display the TimeSpan value.
+        string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            ts.Hours, ts.Minutes, ts.Seconds,
+            ts.Milliseconds / 10);
+        Console.WriteLine("-----------Elapsed Time------------: " + elapsedTime);
+        return Ok(result);
     }
 }

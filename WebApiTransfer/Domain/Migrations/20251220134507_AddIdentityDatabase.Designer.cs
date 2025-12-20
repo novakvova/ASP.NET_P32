@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Domain.Migrations
 {
     [DbContext(typeof(AppDbTransferContext))]
-    [Migration("20251206133134_AddtblTransportationStatuses")]
-    partial class AddtblTransportationStatuses
+    [Migration("20251220134507_AddIdentityDatabase")]
+    partial class AddIdentityDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,9 @@ namespace Domain.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -222,6 +225,56 @@ namespace Domain.Migrations
                     b.ToTable("tblCountries");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TransportationEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DepartureTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FromCityId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SeatsAvailable")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SeatsTotal")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ToCityId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromCityId");
+
+                    b.HasIndex("StatusId");
+
+                    b.HasIndex("ToCityId");
+
+                    b.ToTable("tblTransportations");
+                });
+
             modelBuilder.Entity("Domain.Entities.TransportationStatusEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -364,6 +417,33 @@ namespace Domain.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TransportationEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.Location.CityEntity", "FromCity")
+                        .WithMany("Departures")
+                        .HasForeignKey("FromCityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TransportationStatusEntity", "Status")
+                        .WithMany("Transportations")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Location.CityEntity", "ToCity")
+                        .WithMany("Arrivals")
+                        .HasForeignKey("ToCityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FromCity");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("ToCity");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Domain.Entities.Idenity.RoleEntity", null)
@@ -410,9 +490,21 @@ namespace Domain.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Location.CityEntity", b =>
+                {
+                    b.Navigation("Arrivals");
+
+                    b.Navigation("Departures");
+                });
+
             modelBuilder.Entity("Domain.Entities.Location.CountryEntity", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationStatusEntity", b =>
+                {
+                    b.Navigation("Transportations");
                 });
 #pragma warning restore 612, 618
         }
