@@ -78,11 +78,11 @@ public class UserService(IAuthService authService,
         var query = transferContext.Users.AsQueryable();
         if (!string.IsNullOrWhiteSpace(model.Name))
         {
-            string nameFilter = model.Name.Trim().ToLower().Normalize();
+            string nameFilter = model.Name.Trim().ToLower();
             query = query.Where(u =>
-                (u.FirstName + " " + u.LastName).ToLower().Normalize().Contains(nameFilter)
-                || u.FirstName.ToLower().Normalize().Contains(nameFilter)
-                || u.LastName.ToLower().Normalize().Contains(nameFilter));
+                (u.FirstName + " " + u.LastName).ToLower().Contains(nameFilter)
+                || u.FirstName.ToLower().Contains(nameFilter)
+                || u.LastName.ToLower().Contains(nameFilter));
         }
 
         if (model?.StartDate != null)
