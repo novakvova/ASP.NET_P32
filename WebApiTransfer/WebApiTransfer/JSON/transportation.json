@@ -1,0 +1,22 @@
+[
+  {
+    "Code": "UA-PL-CH-001",
+    "FromCityId": 1,
+    "ToCityId": 3,
+    "DepartureTime": "2025-05-20T08:00:00Z",
+    "ArrivalTime": "2025-05-20T20:00:00Z",
+    "SeatsTotal": 100,
+    "SeatsAvailable": 30,
+    "StatusId": 1
+  },
+  {
+    "Code": "TR-UA-DE-002",
+    "FromCityId": 2,
+    "ToCityId": 4,
+    "DepartureTime": "2024-05-21T10:00:00Z",
+    "ArrivalTime": "2024-05-22T06:00:00Z",
+    "SeatsTotal": 50,
+    "SeatsAvailable": 10,
+    "StatusId": 1
+  }
+]

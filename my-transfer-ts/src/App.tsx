@@ -22,6 +22,7 @@ import BarChart from "./admin/pages/Charts/BarChart.tsx";
 import SignIn from "./admin/pages/AuthPages/SignIn.tsx";
 import SignUp from "./admin/pages/AuthPages/SignUp.tsx";
 import NotFound from "./admin/pages/OtherPage/NotFound.tsx";
+import RegisterPage from "./pages/Users/Register.tsx";
 
 
 const MainLayout = () => {
@@ -48,6 +49,7 @@ export default function App() {
                     <Route index element={<HomePage/>}/>
                     <Route path="about" element={<AboutPage /> }/>,
                     <Route path="user/LogIn" element={<LogIn /> }/>
+                    <Route path="user/register" element={<RegisterPage /> }/>
                 </Route>
                 {/* Dashboard Layout */}
                 <Route path={"/admin"} element={<AppLayout />}>

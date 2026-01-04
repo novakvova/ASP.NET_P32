@@ -15,6 +15,7 @@ public class AccountController(UserManager<UserEntity> userManager,
     IUserService userService,
     RoleManager<RoleEntity> roleManager,
     IImageService imageService,
+    IAccountService accountService,
     IJwtTokenService jwtTokenService) : ControllerBase
 {
     
@@ -85,6 +86,7 @@ public class AccountController(UserManager<UserEntity> userManager,
             UserName = model.Email,
             FirstName = model.FirstName,
             LastName = model.LastName,
+            PhoneNumber = model.Phone,
         };
         if (model.Image != null)
         {
@@ -115,6 +117,25 @@ public class AccountController(UserManager<UserEntity> userManager,
     {
         var model =  await userService.GetUserProfileAsync();
         return Ok(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequestModel model)
+    {
+        var result = await accountService.LoginByGoogle(model.IdToken);
+        if (string.IsNullOrEmpty(result))
+        {
+            return BadRequest(new
+            {
+                Status = 400,
+                IsValid = false,
+                Errors = new { Email = "Помилка реєстрації" }
+            });
+        }
+        return Ok(new
+        {
+            Token = result
+        });
     }
 
     [HttpGet]

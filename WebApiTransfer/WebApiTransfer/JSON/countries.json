@@ -1,0 +1,33 @@
+[
+  {
+    "Name": "Україна",
+    "Code": "UA",
+    "Slug": "ukraine",
+    "Image": "https://faktypro.com.ua/uploads/img-2/top-13-cikavih-faktiv-pro-mista-ukrayini.jpg"
+  },
+  {
+    "Name": "США",
+    "Code": "US",
+    "Slug": "united-states",
+    "Image": "https://interesnyefakty.org/wp-content/uploads/Interesnye-fakty-o-SSHA.jpg"
+  },
+  {
+    "Name": "Франція",
+    "Code": "FR",
+    "Slug": "france",
+    "Image": "https://lh4.googleusercontent.com/proxy/3bXdHE7UcHxEjJSZ_5gTF1XvjiKjVVwdr1txJNdt2O47my8ktyvccT4-dx1muao-T6StCCknZWiGaK5yGzChyQsvQg1TqDoIqJXqOVcvnLEfTZ9DYh2rXEoyo3Lqv0XF1E7-5xvQw2674TkpBmOnhD12XVLsK1xFaUajWoQL4eJtjSa8Gs7EKmZnyOAqEa0wb30L0_S1sABv4FaYJiJhqiG4hE33SNxb85WwmGfHFUgv9VmCPkDgbM8GeZs9Q_eAmg"
+  },
+
+  {
+    "Name": "Німеччина",
+    "Code": "DE",
+    "Slug": "germany",
+    "Image": "https://osvita.ua/doc/images/news/359/35902/835_i.jpg"
+  },
+  {
+    "Name": "Велика Британія",
+    "Code": "UK",
+    "Slug": "united-kingdom",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToRn6vibSpHq9gLKOz0k5MFkYxHnTk__RPpw&s"
+  }
+]

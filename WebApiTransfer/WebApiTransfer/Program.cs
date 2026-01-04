@@ -102,6 +102,7 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 
@@ -150,59 +151,60 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 
-using (var scoped = app.Services.CreateScope())
-{
-    var myAppDbContext = scoped.ServiceProvider.GetRequiredService<AppDbTransferContext>();
-    var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
-    myAppDbContext.Database.Migrate(); //якщо ми не робили міграціії
-
-    var roles = new[] { "User", "Admin" };
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            await roleManager.CreateAsync(new RoleEntity { Name = role });
-        }
-    }
-    if (!myAppDbContext.Users.Any())
-    {
-        var userManager = scoped.ServiceProvider
-            .GetRequiredService<UserManager<UserEntity>>();
-        var adminUser = new UserEntity
-        {
-            UserName = "admin@gmail.com",
-            Email = "admin@gmail.com",
-            FirstName = "System",
-            LastName = "Administrator",
-            Image = "default.jpg"
-        };
-        var result = await userManager.CreateAsync(adminUser, "Admin123");
-        if (result.Succeeded)
-        {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
-        }
-        int countUsers = 100;
-        var faker = new Faker("uk");
-        for (int i = 0; i < countUsers; i++)
-        {
-            var firstName = faker.Name.FirstName();
-            var lastName = faker.Name.LastName();
-            var email = faker.Internet.Email(firstName, lastName);
-            var user = new UserEntity
-            {
-                UserName = email,
-                Email = email,
-                FirstName = firstName,
-                LastName = lastName,
-                Image = "default.jpg"
-            };
-            var userResult = await userManager.CreateAsync(user, "User123");
-            if (userResult.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user, "User");
-            }
-        }
-    }
-}
+///using (var scoped = app.Services.CreateScope())
+///{
+///    var myAppDbContext = scoped.ServiceProvider.GetRequiredService<AppDbTransferContext>();
+///    var roleManager = scoped.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
+///    myAppDbContext.Database.Migrate(); //якщо ми не робили міграціії
+///    var roles = new[] { "User", "Admin" };
+///    foreach (var role in roles)
+///    {
+///        if (!await roleManager.RoleExistsAsync(role))
+///        {
+///            await roleManager.CreateAsync(new RoleEntity { Name = role });
+///        }
+///    }
+///    if (!myAppDbContext.Users.Any())
+///    {
+///        var userManager = scoped.ServiceProvider
+///            .GetRequiredService<UserManager<UserEntity>>();
+///        var adminUser = new UserEntity
+///        {
+///            UserName = "admin@gmail.com",
+///            Email = "admin@gmail.com",
+///            FirstName = "System",
+///            LastName = "Administrator",
+///            Image = "default.jpg"
+///        };
+///        var result = await userManager.CreateAsync(adminUser, "Admin123");
+///        if (result.Succeeded)
+///        {
+///            await userManager.AddToRoleAsync(adminUser, "Admin");
+///        }
+///        int countUsers = 100;
+///        var faker = new Faker("uk");
+///        for (int i = 0; i < countUsers; i++)
+///        {
+///            var firstName = faker.Name.FirstName();
+///            var lastName = faker.Name.LastName();
+///            var email = faker.Internet.Email(firstName, lastName);
+///            var user = new UserEntity
+///            {
+///                UserName = email,
+///                Email = email,
+///                FirstName = firstName,
+///                LastName = lastName,
+///                Image = "default.jpg"
+///            };
+///            var userResult = await userManager.CreateAsync(user, "User123");
+///            if (userResult.Succeeded)
+///            {
+///                await userManager.AddToRoleAsync(user, "User");
+///            }
+///        }
+///    }
+///}
+///
+await DbSeeder.SeedData(app.Services);
 
 app.Run();

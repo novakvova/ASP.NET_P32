@@ -1,0 +1,16 @@
+[
+  {
+    "FirstName": "Admin",
+    "LastName": "System",
+    "Email": "admin@gmail.com",
+    "Image": "admin.jpg",
+    "Role": "Admin"
+  },
+  {
+    "FirstName": "Max",
+    "LastName": "Slip",
+    "Email": "user@gmail.com",
+    "Image": "user.jpg",
+    "Role": "User"
+  }
+]
