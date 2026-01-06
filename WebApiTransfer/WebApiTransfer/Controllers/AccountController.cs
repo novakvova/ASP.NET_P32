@@ -80,6 +80,17 @@ public class AccountController(UserManager<UserEntity> userManager,
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        var existingUser = await userManager.FindByEmailAsync(model.Email);
+        if (existingUser != null)
+        {
+            return BadRequest(new
+            {
+                Status = 400,
+                IsValid = false,
+                Errors = new { Email = "Користувач з такою поштою вже існує" }
+            });
+        }
+
         var entity = new UserEntity
         {
             Email = model.Email,
