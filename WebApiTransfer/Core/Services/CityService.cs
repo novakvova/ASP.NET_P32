@@ -5,6 +5,7 @@ using Core.Models.Location.City;
 using Domain;
 using Domain.Entities.Location;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Core.Services;
 
@@ -34,5 +35,29 @@ public class CityService(AppDbTransferContext appDbContext,
             .ProjectTo<CityItemModel>(mapper.ConfigurationProvider)
             .ToListAsync();
         return list;
+    }
+    public async Task<CityItemModel> GetByIdAsync(int id)
+    {
+        var entity = await appDbContext.Cities.FindAsync(id);
+        if (entity == null || entity.IsDeleted)
+        {
+            throw new Exception("City not found");
+        }
+
+        var item = mapper.Map<CityItemModel>(entity);
+        return item;
+    }
+    public async Task<CityItemModel> DeleteAsync(int id)
+    {
+        var entity = await appDbContext.Cities.FindAsync(id);
+        if (entity == null)
+        {
+            throw new Exception("Country not found");
+        }
+        entity.IsDeleted = true;
+        appDbContext.Cities.Update(entity);
+        await appDbContext.SaveChangesAsync();
+        var item = mapper.Map<CityItemModel>(entity);
+        return item;
     }
 }

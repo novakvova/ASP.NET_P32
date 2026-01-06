@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
-import {Users} from "lucide-react";
+import {BuildingIcon, Users} from "lucide-react";
 
 // Assume these icons are imported from an icon library
 import {
@@ -60,6 +60,18 @@ const navItems: NavItem[] = [
       { name: "404 Error", path: "/error-404", pro: false },
     ],
   },
+
+    {
+        icon: <BuildingIcon />,
+        name: "city",
+        subItems: [
+            {path: "/admin/cities", name: "Cities", pro: false},
+            {path: "/admin/add-city", name: "Add City", pro: false},
+            // {id: "roles", label: "Roles & Permissions"},
+            // {id: "activity", label: "User Activity"},
+        ],
+    },
+
     {
         icon: <Users />,
         name: "Users",

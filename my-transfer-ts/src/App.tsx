@@ -27,6 +27,9 @@ import ForgotPasswordPage from "./pages/Users/ForgotPasswordPage.tsx";
 import ResetPasswordPage from "./pages/Users/ResetPasswordPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import AllUsersFilterPage from "./pages/AllUsersFilterPage.tsx";
+import CitiesPage from "./pages/CitiesPage.tsx";
+import CityDescriptionPage from "./pages/CityDescriptionPage.tsx";
+import AddCities from "./pages/AddCities.tsx";
 
 
 const MainLayout = () => {
@@ -51,6 +54,8 @@ export default function App() {
             <Routes>
                 <Route path={"/"} element={<MainLayout/>}>
                     <Route index element={<HomePage/>}/>
+                    <Route path="/cities" element={<CitiesPage />} />
+                    <Route path="/cities/:slug" element={<CityDescriptionPage />} />
                     <Route path="about" element={<AboutPage /> }/>,
                     <Route path="user/LogIn" element={<LogIn /> }/>
                     <Route path="user/register" element={<RegisterPage /> }/>
@@ -84,11 +89,16 @@ export default function App() {
                     <Route path="line-chart" element={<LineChart />} />
                     <Route path="bar-chart" element={<BarChart />} />
 
+                    <Route path="cities" element={<CitiesPage />} />
+                    <Route path="add-city" element={<AddCities />} />
+                    <Route path="cities/:slug" element={<CityDescriptionPage />} />
+
                     <Route path="all-users" element={<AllUsersFilterPage/>} />
                 </Route>
                 {/* Auth Layout */}
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
+
 
                 {/* Fallback Route */}
                 <Route path="*" element={<NotFound />} />

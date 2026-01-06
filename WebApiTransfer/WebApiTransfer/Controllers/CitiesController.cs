@@ -21,5 +21,19 @@ namespace WebApiTransfer.Controllers
             var item = await cityService.CreateAsync(model);
             return Ok(item);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCity(int id)
+        {
+            var item = await cityService.GetByIdAsync(id);
+            return Ok(item);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCity(int id)
+        {
+            var item = await cityService.DeleteAsync(id);
+            return Ok(item);
+        }
     }
 }
