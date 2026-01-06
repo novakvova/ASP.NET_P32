@@ -70,8 +70,11 @@ const LogIn: React.FC = () => {
         onSuccess: async (tokenResponse) =>
         {
             console.log("tokenResponse", tokenResponse.access_token);
+            //console.log("tokenResponse", tokenResponse);
             try {
-                const response = await axios.post<LoginSuccess>(`${APP_ENV.API_BASE_URL}/api/Account/googleLogin`, {
+
+                const response =
+                    await axios.post<LoginSuccess>(`${APP_ENV.API_BASE_URL}/api/Account/googleLogin`, {
                     idToken: tokenResponse.access_token
                 });
                 // dispatch(loginSuccess(result.token));

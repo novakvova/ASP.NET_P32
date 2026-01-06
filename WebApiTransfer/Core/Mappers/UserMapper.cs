@@ -17,7 +17,7 @@ public class UserMapper : Profile
         //.ForMember(x => x.Phone, opt => opt.MapFrom(x => x.PhoneNumber));
 
         CreateMap<GoogleAccountModel, UserEntity>()
-        .ForMember(x => x.Image, opt => opt.Ignore())
-        .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.Email));
+            .ForMember(x => x.Image, opt => opt.Ignore())
+            .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.Email));
     }
 }
