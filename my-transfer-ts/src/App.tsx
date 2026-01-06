@@ -23,6 +23,10 @@ import SignIn from "./admin/pages/AuthPages/SignIn.tsx";
 import SignUp from "./admin/pages/AuthPages/SignUp.tsx";
 import NotFound from "./admin/pages/OtherPage/NotFound.tsx";
 import RegisterPage from "./pages/Users/Register.tsx";
+import ForgotPasswordPage from "./pages/Users/ForgotPasswordPage.tsx";
+import ResetPasswordPage from "./pages/Users/ResetPasswordPage.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
+import AllUsersFilterPage from "./pages/AllUsersFilterPage.tsx";
 
 
 const MainLayout = () => {
@@ -50,6 +54,9 @@ export default function App() {
                     <Route path="about" element={<AboutPage /> }/>,
                     <Route path="user/LogIn" element={<LogIn /> }/>
                     <Route path="user/register" element={<RegisterPage /> }/>
+                    <Route path="forgot-password" element={<ForgotPasswordPage/>}/>
+                    <Route path="reset-password" element={<ResetPasswordPage/>}/>
+                    <Route path="profile" element={<ProfilePage />} />
                 </Route>
                 {/* Dashboard Layout */}
                 <Route path={"/admin"} element={<AppLayout />}>
@@ -73,10 +80,11 @@ export default function App() {
                     <Route path="buttons" element={<Buttons />} />
                     <Route path="images" element={<Images />} />
                     <Route path="videos" element={<Videos />} />
-
                     {/* Charts */}
                     <Route path="line-chart" element={<LineChart />} />
                     <Route path="bar-chart" element={<BarChart />} />
+
+                    <Route path="all-users" element={<AllUsersFilterPage/>} />
                 </Route>
                 {/* Auth Layout */}
                 <Route path="/signin" element={<SignIn />} />

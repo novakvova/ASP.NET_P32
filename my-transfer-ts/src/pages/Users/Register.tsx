@@ -31,7 +31,7 @@ const RegisterPage = () => {
 
     const appDispatch = useAppDispatch();
 
-    const handleSubmit = async (values: IRegisterModel, { setSubmitting, setStatus }:FormikHelpers<IRegisterModel>) => {
+    const handleSubmit = async (values: IRegisterModel, { setSubmitting }:FormikHelpers<IRegisterModel>) => {
         try {
             let image: null|File = null;
             if (values.image && values.image.length > 0) {

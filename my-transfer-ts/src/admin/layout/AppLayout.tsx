@@ -3,6 +3,8 @@ import { Outlet } from "react-router";
 import AppHeader from "./AppHeader";
 import Backdrop from "./Backdrop";
 import AppSidebar from "./AppSidebar";
+import {useAppSelector} from "../../store";
+import {Navigate} from "react-router-dom";
 
 const LayoutContent: React.FC = () => {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
@@ -28,6 +30,18 @@ const LayoutContent: React.FC = () => {
 };
 
 const AppLayout: React.FC = () => {
+
+    const user =
+        useAppSelector(redux => redux.auth.user);
+
+    if (!user) {
+        return <Navigate to="/user/login" replace/>;
+    }
+
+    if (!user.roles?.includes("Admin")) {
+        return <Navigate to="/" replace/>;
+    }
+
   return (
     <SidebarProvider>
       <LayoutContent />

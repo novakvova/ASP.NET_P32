@@ -22,7 +22,7 @@ export default function Header() {
 
                 {
                     user!=null  ? (<div className={"flex justify-end gap-4"}>
-                            <Link to="/user/Profile" className="hover:underline flex items-center h-full">
+                            <Link to="/profile" className="hover:underline flex items-center h-full">
                                 <div className="flex items-center justify-end gap-4">
 
                                     <img src={`${APP_ENV.API_BASE_URL}/images/${user ? user.image : "default.png"}`} alt="logo"

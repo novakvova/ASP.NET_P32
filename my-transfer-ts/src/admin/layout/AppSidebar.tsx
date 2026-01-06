@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
+import {Users} from "lucide-react";
 
 // Assume these icons are imported from an icon library
 import {
@@ -59,6 +60,16 @@ const navItems: NavItem[] = [
       { name: "404 Error", path: "/error-404", pro: false },
     ],
   },
+    {
+        icon: <Users />,
+        name: "Users",
+        subItems: [
+            {path: "/admin/all-users", name: "All Users", pro: false},
+            // {id: "roles", label: "Roles & Permissions"},
+            // {id: "activity", label: "User Activity"},
+        ],
+    },
+
 ];
 
 const othersItems: NavItem[] = [
@@ -90,6 +101,8 @@ const othersItems: NavItem[] = [
       { name: "Sign Up", path: "/signup", pro: false },
     ],
   },
+
+
 ];
 
 const AppSidebar: React.FC = () => {
