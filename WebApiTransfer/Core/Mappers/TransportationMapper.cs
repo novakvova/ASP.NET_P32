@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Models.Cart;
 using Core.Models.Transportation;
 using Domain.Entities;
 

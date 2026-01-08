@@ -3,6 +3,7 @@
 
 public class TransportationItemModel
 {
+    public int Id { get; set; }
     public string Code { get; set; } = string.Empty;
 
     /// <summary>

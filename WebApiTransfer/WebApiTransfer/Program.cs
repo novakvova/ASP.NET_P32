@@ -104,8 +104,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITransportationService, TransportationService>();
-
-
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
