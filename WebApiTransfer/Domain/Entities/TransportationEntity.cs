@@ -56,4 +56,6 @@ public class TransportationEntity : BaseEntity<int>
     public int StatusId { get; set; }
     public TransportationStatusEntity Status { get; set; }
 
+    public ICollection<CartEntity> Carts { get; set; } = null!;
+
 }

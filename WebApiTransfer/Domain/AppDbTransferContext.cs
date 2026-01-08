@@ -21,6 +21,7 @@ public class AppDbTransferContext : IdentityDbContext<UserEntity, RoleEntity, in
     public DbSet<CityEntity> Cities { get; set; }
     public DbSet<TransportationStatusEntity> TransportationStatuses { get; set; }
     public DbSet<TransportationEntity> Transportations { get; set; }
+    public DbSet<CartEntity> Carts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -46,5 +47,8 @@ public class AppDbTransferContext : IdentityDbContext<UserEntity, RoleEntity, in
             .HasMany(c => c.Arrivals)
             .WithOne(t => t.ToCity)
             .HasForeignKey(t => t.ToCityId);
+
+        builder.Entity<CartEntity>()
+            .HasKey(pi => new { pi.TransportationId, pi.UserId });
     }
 }
