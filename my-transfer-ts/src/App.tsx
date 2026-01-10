@@ -30,6 +30,7 @@ import AllUsersFilterPage from "./pages/AllUsersFilterPage.tsx";
 import CitiesPage from "./pages/CitiesPage.tsx";
 import CityDescriptionPage from "./pages/CityDescriptionPage.tsx";
 import AddCities from "./pages/AddCities.tsx";
+import TransportationsPage from "./pages/TransportationsPage.tsx";
 
 
 const MainLayout = () => {
@@ -62,6 +63,7 @@ export default function App() {
                     <Route path="forgot-password" element={<ForgotPasswordPage/>}/>
                     <Route path="reset-password" element={<ResetPasswordPage/>}/>
                     <Route path="profile" element={<ProfilePage />} />
+                    <Route path="tickets" element={<TransportationsPage/>}/>
                 </Route>
                 {/* Dashboard Layout */}
                 <Route path={"/admin"} element={<AppLayout />}>
